@@ -1,7 +1,3 @@
 # HelloWorld
-My first repository
-
-My name is Wang Wudi
-
-What the Fuck
+毕设留念 无数据库 地图功能中的统计和热力图为静态 查看详情功能也是静态
 ===
