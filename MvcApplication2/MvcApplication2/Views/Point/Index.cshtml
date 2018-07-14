@@ -1,0 +1,386 @@
+﻿
+@{
+  Layout = "~/Views/share/tmp.cshtml";
+}
+
+@model IEnumerable<MvcApplication2.Models.ObservePoint>
+<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=qtPQhZPEjO7LyUOSeF3qXDbdK8EXAZLi"></script>
+ <script type="text/javascript" src="http://api.map.baidu.com/library/Heatmap/2.0/src/Heatmap_min.js"></script>
+<script src="../../js/jquery.js" type="text/javascript"></script>
+<div id="allmap" style="width: 100%; height: 70%"></div>
+@*上传*@
+<form method="post" action="@Url.Action("Upload")" enctype="multipart/form-data">
+ <input id="f" type="file" name="File" />
+ <input type="submit" value="upload" />
+</form>
+
+<form method="post" action="@Url.Action("Index")">
+<input name="searchtxt" id="search" value="@ViewBag.searchtxt" type="text" placeholder="输入地名" class="scinput" />
+<input name="pname" id="p" value="@ViewBag.name" type="text" placeholder="输入病虫名" class="scinput" /><br>
+<input name="buffer" id="b" value="@ViewBag.buffer" type="text" placeholder="输入缓冲区范围" class="scinput" />
+<input type="submit" value="submit" onclick="document.forms[1].submit()"/>
+</form>
+
+<button onclick="window.open('../../html/tongji.html', 'new', 'location=no, toolbar=no')">统计分析</button>
+
+<input type="button"  onclick="openHeatmap();" value="显示热力图"/><input type="button"  onclick="closeHeatmap();" value="关闭热力图"/>
+
+
+
+ <table class="tablelist">
+    
+    	<thead>
+    	<tr>
+        
+            <th>
+                点ID
+            </th>
+            <th>
+                观测地址
+            </th>
+            <th>
+                高程
+            </th>
+            <th>
+                经度
+            </th>
+            <th>
+                纬度
+            </th>
+            <th>
+                观测时间
+            </th>
+            <th>
+                病虫害名称
+            </th>
+            
+         @if (Convert.ToInt32(Session["level"]) <2)
+         {
+            <th>
+                操作
+            </th>
+         }
+        </tr>
+        </thead>
+        <tbody id="pestdata">
+         @foreach (var point in Model) 
+        {
+            <tr>
+               
+                <th>
+                    @point.ID
+                </th>
+                <th>
+                    @point.Address
+                </th>
+                <th>
+                    @point.Altitude
+                </th>
+                <th>
+                    @point.Longitude
+                </th>
+                <th>
+                    @point.Altitude
+                </th>
+                <th>
+                    @point.ObDate
+                </th>
+                <th>
+                    @point.Name
+                </th>
+               
+               
+                @if (Convert.ToInt32(Session["level"]) < 2)
+                {
+                <th><a href="@Url.Content("~/Point/Delete?id="+@point.ID )" class="btn btn-danger">删除</a></th>
+                 
+                }
+            </tr> 
+        }
+    
+        </tbody>
+        </table>
+       
+<script type="text/javascript">
+    
+    
+    var map = new BMap.Map("allmap");    // 创建Map实例
+    map.centerAndZoom(new BMap.Point(116.404, 39.915), 5);  // 初始化地图,设置中心点坐标和地图级别
+    //添加地图类型控件
+    map.addControl(new BMap.MapTypeControl({
+        mapTypes: [
+            BMAP_NORMAL_MAP,
+            BMAP_HYBRID_MAP
+        ]
+    }));
+    map.setCurrentCity("北京");          // 设置地图显示的城市 此项是必须设置的
+    map.enableScrollWheelZoom(true);     //开启鼠标滚轮缩放
+    map.enableInertialDragging();
+
+    map.enableContinuousZoom();
+
+    var size = new BMap.Size(10, 20);
+    map.addControl(new BMap.CityListControl({
+        anchor: BMAP_ANCHOR_TOP_LEFT,
+        offset: size,
+        // 切换城市之间事件
+        // onChangeBefore: function(){
+        //    alert('before');
+        // },
+        // 切换城市之后事件
+        // onChangeAfter:function(){
+        //   alert('after');
+        // }
+    }));
+
+
+
+
+
+//     var points =[
+//    {"lng":112.418261,"lat":30.921984,"count":50},
+//    {"lng":112.423332,"lat":30.916532,"count":51},
+//    {"lng":112.419787,"lat":30.930658,"count":15},
+//    {"lng":112.418455,"lat":30.920921,"count":40},
+//    {"lng":112.418843,"lat":30.915516,"count":100},
+//    {"lng":112.42546,"lat":30.918503,"count":6},
+//    {"lng":112.423289,"lat":30.919989,"count":18},
+//    {"lng":112.418162,"lat":30.915051,"count":80},
+//    {"lng":112.422030,"lat":30.91782,"count":11},
+//    {"lng":112.41387,"lat":30.917253,"count":7},
+//    {"lng":112.41773,"lat":30.919426,"count":42},
+//    {"lng":112.421107,"lat":30.916445,"count":4},
+//    {"lng":112.417521,"lat":30.917943,"count":27},
+//    {"lng":112.419812,"lat":30.920836,"count":23},
+//    {"lng":112.420682,"lat":30.91463,"count":60},
+//    {"lng":112.415424,"lat":30.924675,"count":8},
+//    {"lng":112.419242,"lat":30.914509,"count":15},
+//    
+//    {"lng":112.419336,"lat":30.931134,"count":4},
+//    {"lng":112.413557,"lat":30.923254,"count":5},
+//    {"lng":112.418367,"lat":30.92943,"count":3},
+//    {"lng":112.424312,"lat":30.919621,"count":100},
+//    {"lng":112.423874,"lat":30.919447,"count":87},
+//    {"lng":112.424225,"lat":30.923091,"count":32},
+//    {"lng":112.417801,"lat":30.921854,"count":44},
+//    {"lng":112.417129,"lat":30.928227,"count":21},
+//    {"lng":112.426426,"lat":30.922286,"count":80},
+//    {"lng":112.421597,"lat":30.91948,"count":32},
+//    {"lng":112.423895,"lat":30.920787,"count":26},
+//    {"lng":112.423563,"lat":30.921197,"count":17},
+//    {"lng":112.417982,"lat":30.922547,"count":17},
+//    {"lng":112.426126,"lat":30.921938,"count":25},
+//    {"lng":112.42326,"lat":30.915782,"count":100},
+//    {"lng":112.419230,"lat":30.916759,"count":30},
+//    {"lng":112.417185,"lat":30.929123,"count":11},
+//    {"lng":112.417237,"lat":30.927518,"count":9},
+//    {"lng":112.417784,"lat":30.915754,"count":47},
+//    {"lng":112.420193,"lat":30.917061,"count":52},
+//    {"lng":112.422735,"lat":30.915619,"count":100},
+//    {"lng":112.418495,"lat":30.915958,"count":46},
+//    {"lng":112.416292,"lat":30.931126,"count":9},
+//    {"lng":112.419916,"lat":30.924055,"count":8},
+//    {"lng":112.42189,"lat":30.921308,"count":11},
+//    {"lng":112.413765,"lat":30.929376,"count":3},
+//    {"lng":112.418232,"lat":30.920348,"count":50},
+//    {"lng":112.417554,"lat":30.930511,"count":15},
+//  
+//    {"lng":112.413022,"lat":30.921895,"count":13},
+//    {"lng":112.415551,"lat":30.913373,"count":17},
+//    {"lng":112.421191,"lat":30.926572,"count":1},
+//    {"lng":112.419612,"lat":30.917119,"count":9},
+//    {"lng":112.418237,"lat":30.921337,"count":54},
+//    {"lng":112.423776,"lat":30.921919,"count":26},
+//    {"lng":112.417694,"lat":30.92536,"count":17},
+//    {"lng":112.415377,"lat":30.914137,"count":19},
+//    {"lng":112.417434,"lat":30.914304,"count":43},
+//   
+//    {"lng":112.416244,"lat":30.920215,"count":91},
+//    {"lng":112.41929,"lat":30.915908,"count":54},
+//    {"lng":112.422112,"lat":30.919658,"count":21},
+//    {"lng":112.4183,"lat":30.925015,"count":15},
+//    {"lng":112.421969,"lat":30.913527,"count":3},
+//    {"lng":112.422936,"lat":30.921854,"count":24},
+//    {"lng":112.41905,"lat":30.929217,"count":12},
+//    {"lng":112.424579,"lat":30.914987,"count":57},
+//    {"lng":112.42076,"lat":30.915251,"count":70},
+//    {"lng":112.425867,"lat":30.918989,"count":8}];
+//   
+
+//    heatmapOverlay = new BMapLib.HeatmapOverlay({"radius":20});
+//	map.addOverlay(heatmapOverlay);
+//	heatmapOverlay.setDataSet({data:points,max:100});
+	//是否显示热力图
+    function openHeatmap(){
+       
+        map.clearOverlays();  
+       
+
+        var points =[
+    {"lng":112.418261,"lat":30.921984,"count":50},
+    {"lng":112.423332,"lat":30.916532,"count":51},
+    {"lng":112.419787,"lat":30.930658,"count":15},
+    {"lng":112.418455,"lat":30.920921,"count":40},
+    {"lng":112.418843,"lat":30.915516,"count":100},
+    {"lng":112.42546,"lat":30.918503,"count":6},
+    {"lng":112.423289,"lat":30.919989,"count":18},
+    {"lng":112.418162,"lat":30.915051,"count":80},
+    {"lng":112.422030,"lat":30.91782,"count":11},
+    {"lng":112.41387,"lat":30.917253,"count":7},
+    {"lng":112.41773,"lat":30.919426,"count":42},
+    {"lng":112.421107,"lat":30.916445,"count":4},
+    {"lng":112.417521,"lat":30.917943,"count":27},
+    {"lng":112.419812,"lat":30.920836,"count":23},
+    {"lng":112.420682,"lat":30.91463,"count":60},
+    {"lng":112.415424,"lat":30.924675,"count":8},
+    {"lng":112.419242,"lat":30.914509,"count":15},
+    
+    {"lng":112.419336,"lat":30.931134,"count":4},
+    {"lng":112.413557,"lat":30.923254,"count":5},
+    {"lng":112.418367,"lat":30.92943,"count":3},
+    {"lng":112.424312,"lat":30.919621,"count":100},
+    {"lng":112.423874,"lat":30.919447,"count":87},
+    {"lng":112.424225,"lat":30.923091,"count":32},
+    {"lng":112.417801,"lat":30.921854,"count":44},
+    {"lng":112.417129,"lat":30.928227,"count":21},
+    {"lng":112.426426,"lat":30.922286,"count":80},
+    {"lng":112.421597,"lat":30.91948,"count":32},
+    {"lng":112.423895,"lat":30.920787,"count":26},
+    {"lng":112.423563,"lat":30.921197,"count":17},
+    {"lng":112.417982,"lat":30.922547,"count":17},
+    {"lng":112.426126,"lat":30.921938,"count":25},
+    {"lng":112.42326,"lat":30.915782,"count":100},
+    {"lng":112.419230,"lat":30.916759,"count":30},
+    {"lng":112.417185,"lat":30.929123,"count":11},
+    {"lng":112.417237,"lat":30.927518,"count":9},
+    {"lng":112.417784,"lat":30.915754,"count":47},
+    {"lng":112.420193,"lat":30.917061,"count":52},
+    {"lng":112.422735,"lat":30.915619,"count":100},
+    {"lng":112.418495,"lat":30.915958,"count":46},
+    {"lng":112.416292,"lat":30.931126,"count":9},
+    {"lng":112.419916,"lat":30.924055,"count":8},
+    {"lng":112.42189,"lat":30.921308,"count":11},
+    {"lng":112.413765,"lat":30.929376,"count":3},
+    {"lng":112.418232,"lat":30.920348,"count":50},
+    {"lng":112.417554,"lat":30.930511,"count":15},
+  
+    {"lng":112.413022,"lat":30.921895,"count":13},
+    {"lng":112.415551,"lat":30.913373,"count":17},
+    {"lng":112.421191,"lat":30.926572,"count":1},
+    {"lng":112.419612,"lat":30.917119,"count":9},
+    {"lng":112.418237,"lat":30.921337,"count":54},
+    {"lng":112.423776,"lat":30.921919,"count":26},
+    {"lng":112.417694,"lat":30.92536,"count":17},
+    {"lng":112.415377,"lat":30.914137,"count":19},
+    {"lng":112.417434,"lat":30.914304,"count":43},
+   
+    {"lng":112.416244,"lat":30.920215,"count":91},
+    {"lng":112.41929,"lat":30.915908,"count":54},
+    {"lng":112.422112,"lat":30.919658,"count":21},
+    {"lng":112.4183,"lat":30.925015,"count":15},
+    {"lng":112.421969,"lat":30.913527,"count":3},
+    {"lng":112.422936,"lat":30.921854,"count":24},
+    {"lng":112.41905,"lat":30.929217,"count":12},
+    {"lng":112.424579,"lat":30.914987,"count":57},
+    {"lng":112.42076,"lat":30.915251,"count":70},
+    {"lng":112.425867,"lat":30.918989,"count":8}];
+   
+
+    heatmapOverlay = new BMapLib.HeatmapOverlay({"radius":20});
+	map.addOverlay(heatmapOverlay);
+	heatmapOverlay.setDataSet({data:points,max:100});
+
+
+
+        heatmapOverlay.show();
+    }
+	function closeHeatmap(){
+        heatmapOverlay.hide();
+    }
+//	closeHeatmap();
+    function setGradient(){
+     	/*格式如下所示:
+		{
+	  		0:'rgb(102, 255, 0)',
+	 	 	.5:'rgb(255, 170, 0)',
+		  	1:'rgb(255, 0, 0)'
+		}*/
+     	var gradient = {};
+     	var colors = document.querySelectorAll("input[type='color']");
+     	colors = [].slice.call(colors,0);
+     	colors.forEach(function(ele){
+			gradient[ele.getAttribute("data-key")] = ele.value; 
+     	});
+        heatmapOverlay.setOptions({"gradient":gradient});
+    }
+
+
+
+
+    //点击事件
+    function addClickHandler(content, marker) {
+        marker.addEventListener("click", function (e) {
+            openInfo(content, e)
+        }
+		);
+    }
+    //打开信息窗口
+    function openInfo(content, e) {
+        var p = e.target;
+        var point = new BMap.Point(p.getPosition().lng, p.getPosition().lat);
+        var infoWindow = new BMap.InfoWindow(content, opts);  // 创建信息窗口对象 
+        map.openInfoWindow(infoWindow, point); //开启信息窗口
+    }
+    //窗口设置
+    var opts = {
+        width: 250,     // 信息窗口宽度
+        height: 180,     // 信息窗口高度
+        title: "信息窗口", // 信息窗口标题
+        enableMessage: true//设置允许信息窗发送短息
+    };
+    //图标
+   // var myIcon = new BMap.Icon("../../images/orange.png", new BMap.Size(150, 150));
+    var bdary = new BMap.Boundary();
+    var s=$("#search").val();
+		bdary.get(s, function(rs){       //获取行政区域
+			//map.clearOverlays();        //清除地图覆盖物       
+			var count = rs.boundaries.length; //行政区域的点有多少个
+			if (count === 0) {
+				alert('未能获取当前输入行政区域');
+				return ;
+			}
+			
+			var pointArray = [];
+			for (var i = 0; i < count; i++) {
+				var ply = new BMap.Polygon(rs.boundaries[i], {strokeWeight: 2, strokeColor: "#ff0000"}); //建立多边形覆盖物
+				map.addOverlay(ply);  //添加覆盖物
+				pointArray = pointArray.concat(ply.getPath());
+			}    
+			map.setViewport(pointArray);    //调整视野  
+		})
+</script>
+
+
+
+@foreach(var point in Model)
+{
+   <script type="text/javascript"> 
+      var marker = new BMap.Marker(new BMap.Point(@point.Longitude, @point.Latitude)); //overlay
+      map.addOverlay(marker);
+
+      var content="点编号："+@point.ID+"<br>点名：@point.Name<br>经度:@point.Longitude<br>纬度：@point.Latitude<br>危害程度：@point.Altitude";
+      addClickHandler(content,marker);
+    
+   </script>
+}
+
+@foreach (var point in Model)
+{
+    <script type="text/javascript">
+    var dis=$("#b").val();
+    var mPoint = new BMap.Point(@point.Longitude, @point.Latitude);
+    var circle = new BMap.Circle(mPoint, dis, { fillColor: "blue", strokeWeight: 1, fillOpacity: 0.3, strokeOpacity: 0.3 });
+    map.addOverlay(circle);
+    </script>
+}
+

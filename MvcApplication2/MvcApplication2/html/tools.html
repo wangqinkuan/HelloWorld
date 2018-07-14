@@ -1,0 +1,97 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>无标题文档</title>
+<link href="css/style.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="js/jquery.js"></script>
+<script type="text/javascript" src="js/jsapi.js"></script>
+<script type="text/javascript" src="js/format+zh_CN,default,corechart.I.js"></script>		
+<script type="text/javascript" src="js/jquery.gvChart-1.0.1.min.js"></script>
+<script type="text/javascript" src="js/jquery.ba-resize.min.js"></script>
+
+<script type="text/javascript">
+    gvChartInit();
+    jQuery(document).ready(function () {
+
+        jQuery('#myTable5').gvChart({
+            chartType: 'PieChart',
+            gvSettings: {
+                vAxis: { title: 'No of players' },
+                hAxis: { title: 'Month' },
+                width: 650,
+                height: 250
+            }
+        });
+    });
+		</script>
+<link href="css/style.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+
+	<div class="place">
+    <span>位置：</span>
+    <ul class="placeul">
+    <li><a href="#">首页</a></li>
+    <li><a href="#">工具箱</a></li>
+    </ul>
+    </div>
+    
+    <div class="formbody">
+    
+    <div class="formtitle"><span>数据统计</span></div>
+   
+        
+    <div class="maintj">  
+    <table id='myTable5'>
+				<caption>饼图分析</caption>
+				<thead>
+					<tr>
+						<th></th>
+						<th>Jan</th>
+						<th>Feb</th>
+						<th>Mar</th>
+						<th>Apr</th>
+						<th>May</th>
+						<th>Jun</th>
+						<th>Jul</th>
+						<th>Aug</th>
+						<th>Sep</th>
+						<th>Oct</th>
+						<th>Nov</th>
+						<th>Dec</th>
+					</tr>
+				</thead>
+					<tbody>
+					<tr>
+						<th>2010</th>
+						<td>125</td>
+						<td>185</td>
+						<td>327</td>
+						<td>359</td>
+						<td>376</td>
+						<td>398</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+					</tr>
+				</tbody>
+			</table>  
+    </div>
+    
+    </div>
+    
+    <div class="formtitle"><span>分级显示</span></div>
+    
+   
+    
+    
+    
+    </div>
+</body>
+</html>

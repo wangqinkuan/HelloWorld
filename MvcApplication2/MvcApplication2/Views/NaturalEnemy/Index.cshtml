@@ -1,0 +1,29 @@
+﻿@{
+    //Layout = "~/Views/share/tmp.cshtml";
+}
+@model MvcApplication2.Models.NaturalEnemy
+<div style="color:Red">
+天敌编号：</div>
+@Model.id
+
+<br>
+<div style="color:Red">
+天敌学名及拉丁名：</div>
+@Model.ScientificName_chs @Model.ScientificName
+
+
+<div style="color:Red">
+天敌别名：</div>
+@Model.Alias
+
+
+
+<div style="color:Red">该天敌克制的所有病虫:</div>
+@foreach (var pest in ViewData["pest"] as IEnumerable<MvcApplication2.Models.pest>) 
+{
+    <p style="color:Red">
+   <a href="@Url.Content("~/Pest/Detail?id=" + @pest.id)">中文名：@pest.ScientificName_chs</a>
+   <a href="@Url.Content("~/Pest/Detail?id=" + @pest.id)">拉丁名：@pest.ScientificName </a>
+    </p>
+}
+

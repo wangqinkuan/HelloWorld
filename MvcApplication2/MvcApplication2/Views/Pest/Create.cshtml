@@ -1,0 +1,132 @@
+﻿@{
+    Layout = "~/Views/share/tmp.cshtml";
+}
+@model MvcApplication2.Models.pest
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>无标题文档</title>
+    <link href="../../css/style.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="../../js/jquery.js"></script>
+    <script language="javascript">
+        $(function () {
+            //导航切换
+            $(".disklist li").click(function () {
+                $(".disklist li.selected").removeClass("selected")
+                $(this).addClass("selected");
+            })
+        })	
+    </script>
+   
+    <script type="text/javascript" src="../../js/jquery.js"></script>
+    <script type="text/javascript" src="../../js/jquery.idTabs.min.js"></script>
+    <script type="text/javascript" src="../../js/select-ui.min.js"></script>
+    <script type="text/javascript" src="../../editor/kindeditor.js"></script>
+    <script type="text/javascript">
+        KE.show({
+            id: 'content7',
+            cssPath: './index.css'
+        });
+    </script>
+    <script type="text/javascript">
+        $(document).ready(function (e) {
+            $(".select1").uedSelect({
+                width: 345
+            });
+            $(".select2").uedSelect({
+                width: 167
+            });
+            $(".select3").uedSelect({
+                width: 100
+            });
+        });
+    </script>
+</head>
+<body>
+   @* <div class="place">
+        <span>位置：</span>
+        <ul class="placeul">
+            <li><a href="#">首页</a></li>
+            <li><a href="#">文件管理</a></li>
+        </ul>
+    </div>*@
+    <div id="tab1" class="tabson">
+        <div>
+            Hi，<b>admin</b>，请在在以下表格中输入病虫害信息</div>
+            @Html.ValidationSummary(true)
+     <form method="post" action="@Url.Action("Create")">
+        <ul class="forminfo">
+            <li>
+                <label>
+                    病虫害ID<b>*</b></label>
+                <input name="id" type="text" class="dfinput" value="@Model.id" style="width: 168px;" />@Html.ValidationMessageFor(model=>model.id)</li>
+              
+            <li>
+                <label>
+                    病虫害名称<b>*</b></label>
+                <input name="ScientificName_chs" type="text" value="@Model.ScientificName_chs" class="dfinput"  style="width: 168px;" />@Html.ValidationMessageFor(model=>model.ScientificName_chs)</li>
+            <li>
+                <label>
+                    病虫拉丁名<b>*</b></label><input name="ScientificName" value="@Model.ScientificName" type="text" class="dfinput" style="width: 168px;" />@Html.ValidationMessageFor(model=>model.ScientificName)</li>
+            <li>
+                <label>
+                    别名<b>*</b></label><input name="Alias" value="@Model.Alias" type="text" class="dfinput"  style="width: 168px;" />@Html.ValidationMessageFor(model=>model.Alias)</li>
+            <li>
+                <label>
+                    目科<b>*</b></label>
+                <div class="usercity">
+                    <div class="cityleft">
+                        <select class="select2" name="Order_">
+                            <option value="1目">1</option>
+                            <option value="2目">2</option>
+                            <option value="3目">3</option>
+                            <option value="4目">4</option>
+                            <option value="5目">5</option>
+                        </select>
+                    </div>
+                    <div class="cityright">
+                        <select class="select2" name="Family">
+                            <option value="1科">6</option>
+                            <option value="2科">7</option>
+                            <option value="3科">8</option>
+                            <option value="4科">9</option>
+                            <option value="5科">10</option>
+                        </select>
+                    </div>
+                </div>
+            </li>
+            
+            <li>
+                <label>
+                    分布情况<b>*</b></label><input name="Distribution" value="@Model.Distribution" type="text" class="dfinput"  style="width: 344px;" /></li>
+            <li>
+                <label>
+                    成虫<b>*</b></label><input name="Imago" value="@Model.Imago" type="text" class="dfinput"  style="width: 344px;"/></li>
+            <li>
+           
+                <label>
+                    卵<b>*</b></label><input name="Egg" type="text" value="@Model.Egg" class="dfinput"  style="width: 344px;"/></li>
+            <li>
+                <label>
+                    幼虫<b>*</b></label><input name="Larva" type="text" value="@Model.Larva" class="dfinput"  style="width: 344px;"/></li>
+            <li>
+                <label>
+                    发生规律<b>*</b></label><input name="Occurence" value="@Model.Occurence" type="text" class="dfinput"  style="width: 344px;"/></li>
+            <li> <label>
+                病虫害特征<b>*</b></label>
+            <textarea cols="20" id="content7" name="DamageSymptoms"   style="width: 700px; height: 200px; visibility: hidden;"> @Model.DamageSymptoms</textarea>
+            </li>
+                 <li>   <label>
+                    &nbsp;</label><button type="submit" class="btn" value="马上发布">马上发布</button></li>
+        </ul>
+     </form>
+    </div>
+    <script type="text/javascript">
+        $("#usual1 ul").idTabs();
+    </script>
+    <script type="text/javascript">
+        $('.tablelist tbody tr:odd').addClass('odd');
+    </script>
+</body>
+</html>

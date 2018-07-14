@@ -1,0 +1,42 @@
+﻿@{
+   // Layout = "~/Views/share/tmp.cshtml";
+}
+@model MvcApplication2.Models.PesticideManufacturer
+
+<script type="text/javascript" src="../../js/jquery.js"></script>
+
+<body>
+  
+    <div id="tab1" class="tabson">
+        <div class="formtext">@Model.Name<b>详细信息</b></div>
+        <ul class="forminfo">
+            <li>厂商id:<div style="color:Red">@Model.ID</div>
+            </li>
+            <li>地址:<div style="color:Red">@Model.Address</div>
+            </li>
+            <li>邮箱:<div style="color:Red">@Model.Email</div>
+            </li>
+            <li>邮编:<div style="color:Red">@Model.Zipcode</div>
+            </li>
+            <li>电话:<div style="color:Red"@Model.Phone</div>
+                                     
+            <li>
+                <label>
+                    图像<b>*</b></label>
+            </li>
+            <li>该厂商生产的所有杀虫剂
+                @foreach (var pc in ViewData["pc"] as IEnumerable<MvcApplication2.Models.Pesticide>)
+                { 
+                    <div style="color:Red">
+                     <a href="@Url.Content("~/Pesticide/Index?id=" + @pc.id)">
+                        @pc.TradeName</a>
+                        </div>
+                    
+                }
+            </li>
+           
+          
+        </ul>
+    </div>
+   
+

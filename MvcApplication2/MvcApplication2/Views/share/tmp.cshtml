@@ -1,0 +1,23 @@
+﻿<link href="../../css/style.css" rel="stylesheet" type="text/css" />
+<link href="../../css/select.css" rel="stylesheet" type="text/css" />
+
+@if (Session["name"] == null) 
+{
+    <script type="text/javascript">
+    window.location.href='User/Index'
+    </script>
+}
+
+<div class="place">
+    <span>导航：</span>
+    <ul class="placeul">
+    <li><a href="@Url.Content("~/Pest/Index")">柑橘信息</a></li>
+    <li><a href="@Url.Content("~/Pest/Index")">病虫害信息</a></li>
+    <li><a href="@Url.Content("~/Point/Index")">地图服务</a></li>
+    <li><a href="@Url.Content("~/User/Index")">登陆界面</a></li>
+    <li><a href="@Url.Content("~/User/Index")">日志管理</a></li>
+    <li>当前用户:@Session["name"]</li>
+    <li>用户权限(1表示最高):@Session["level"]</li>
+    </ul>
+</div>
+@RenderBody()

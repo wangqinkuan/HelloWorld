@@ -1,0 +1,181 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>无标题文档</title>
+<link href="css/style.css" rel="stylesheet" type="text/css" />
+<link href="css/select.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="js/jquery.js"></script>
+<script type="text/javascript" src="js/jquery.idTabs.min.js"></script>
+<script type="text/javascript" src="js/select-ui.min.js"></script>
+<script type="text/javascript" src="editor/kindeditor.js"></script>
+
+<script type="text/javascript">
+    KE.show({
+        id : 'content7',
+        cssPath : './index.css'
+    });
+  </script>
+  
+<script type="text/javascript">
+$(document).ready(function(e) {
+    $(".select1").uedSelect({
+		width : 345			  
+	});
+	$(".select2").uedSelect({
+		width : 167  
+	});
+	$(".select3").uedSelect({
+		width : 100
+	});
+});
+</script>
+</head>
+
+<body>
+
+	<div class="place">
+    <span>位置：</span>
+    <ul class="placeul">
+    <li><a href="#">首页</a></li>
+    <li><a href="#">系统设置</a></li>
+    </ul>
+    </div>
+    
+    <div class="formbody">
+    
+    
+    <div id="usual1" class="usual"> 
+    
+    <div class="itab">
+  	<ul> 
+    <li><a href="#tab1" class="selected">病虫害数据表格显示</a></li> 
+    <li><a href="#tab2">病虫害数据图片显示</a></li> 
+  	</ul>
+    </div> 
+   <div id="tab1" class="tabson">
+    
+    
+    <ul class="seachform">
+    
+    <li><label>综合查询</label><input name="" type="text" class="scinput" /></li>
+    <li><label>地区</label>  
+    <div class="vocation">
+    <select class="select3">
+   
+    <option>其他</option>
+    </select>
+    </div>
+    </li>
+    
+    <li><label>年份</label>  
+    <div class="vocation">
+    <select class="select3">
+  
+    <option>其他</option>
+    </select>
+    </div>
+    </li>
+    
+    <li><label>病虫害类型</label>  
+    <div class="vocation">
+    <select class="select3">
+    <option>全部</option>
+    <option>其他</option>
+    </select>
+    </div>
+    </li>
+    
+    <li><label>&nbsp;</label><input name="" type="button" class="scbtn" value="查询"/></li>
+    
+    </ul>
+    
+    
+    <table class="tablelist">
+    	<thead>
+    	<tr>
+        <th><input name="" type="checkbox" value="" checked="checked"/></th>
+        <th>病虫ID<i class="sort"><img src="images/px.gif" /></i></th>
+             <th>图像ID</th>
+        <th>病虫拉丁名</th>
+             <th>病虫害类型</th>
+            <th>病虫害表现特征</th>
+        <th>别名</th>
+        <th>分布情况</th>
+        <th>出现</th>
+       
+        <th>操作时间</th>
+        <th>控制虫害方式</th>
+        <th>其他</th>
+        </tr>
+        </thead>
+        <tbody>
+      
+        
+        <tr>
+        <td><input name="" type="checkbox" value="" /></td>
+        <td>20130907</td>  <td></td>
+       <td>巴拉巴拉</td>
+        <td>枯萎症</td>
+             <td>叶黄，枝上多黑斑，植株矮小</td>
+            <td></td>
+        <td>浙江 温州</td>
+        <td>2013-09-08 14:02</td>
+      
+             <td>2013-09-08 14:02</td>
+             <td>有很多</td>
+        <td><a href="army.html" class="tablelink">查看天敌</a>   <a href="pesti.html" class="tablelink">查看杀虫剂</a>  <a href="#" class="tablelink">删除</a> <a href="#" class="tablelink">修改</a></td>
+        </tr>
+       
+        
+      
+    
+        </tbody>
+        
+    </table>
+
+
+    
+   
+ 
+    
+    </div> 
+
+
+ <a href="pest_add.html" target="rightFrame"><input name="" type="button" class="scbtn" value="添加"/></a>  
+      <a href="#" target="rightFrame"><input name="" type="button" class="scbtn" value="批量删除"/></a>  
+
+
+  	<div id="tab2" class="tabson">
+         此处导入病虫害专题图
+    </div> 
+    
+    
+  	   
+
+
+        
+         
+	</div> 
+ 
+	<script type="text/javascript"> 
+      $("#usual1 ul").idTabs(); 
+    </script>
+    
+    <script type="text/javascript">
+	$('.tablelist tbody tr:odd').addClass('odd');
+	</script>
+    
+    
+    
+ 
+    
+ 
+    
+   
+    
+    
+    </div>
+
+</body> 
+</html>

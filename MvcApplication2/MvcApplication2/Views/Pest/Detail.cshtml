@@ -1,0 +1,73 @@
+﻿@{
+  // Layout = "~/Views/share/tmp.cshtml";
+}
+@model MvcApplication2.Models.pest
+
+@*<link href="../../css/style.css" rel="stylesheet" type="text/css" />*@
+
+<script type="text/javascript" src="../../js/jquery.js"></script>
+
+
+
+
+<body>
+
+    @*<div class="place">
+    <span>位置：</span>
+    <ul class="placeul">
+    <li><a href="#">首页</a></li>
+    <li><a href="#">文件管理</a></li>
+    </ul>
+    </div>*@
+    <div >
+        <b>病虫害：</b><div >@Model.ScientificName_chs<b>详情浏览</b></div>
+        <ul >
+            <li><div style="color:Red">病虫ID:</div><div>@Model.id</div>
+            </li>
+            <li><div style="color:Red">病虫拉丁名:</div><div>@Model.ScientificName</div>
+            </li>
+            <li><div style="color:Red">病虫中文名:<div style="color:Red">@Model.ScientificName_chs</div>
+            </li>
+            <li><div style="color:Red">病虫别名:</div><div>@Model.Alias</div>
+            </li>
+            <li><div style="color:Red">目科:</div><div>@Model.Order_</div>
+                <div>@Model.Family</div>
+            </li>
+            <li><div style="color:Red">成虫:</div><div>@Model.Imago</div>
+                <img src="../../pic/cc.png" />
+            </li>
+            <li><div style="color:Red">卵:</div><div>@Model.Egg</div>
+                <img src="../../pic/l.png" />
+            </li>
+            <li><div style="color:Red">幼体:</div><div>@Model.Larva</div>
+                <img src="../../pic/y.png" />
+            </li>
+            <li><div style="color:Red">发生规律:</div><div> @Model.Occurence</div>
+            </li>
+            <li><div style="color:Red">分布:</div><div>@Model.Distribution</div>
+            </li>
+            <li><div style="color:Red">危害特征:</div><div>@Model.DamageSymptoms</div>
+                <img src="../../pic/d.png" /><img src="../../pic/d2.png" /><img src="../../pic/d3.png" /><img
+                    src="../../pic/d4.png" />
+            </li>
+           
+            <li><div style="color:Red">控制方法:</div>
+                @foreach (var cm in ViewData["controllingmethod"] as IEnumerable<MvcApplication2.Models.ControllingMethod>)
+                { 
+                    <div>@cm.Description</div>
+                }
+            </li>
+            <li><div style="color:Red">天敌:</div>
+                @foreach (var ne in ViewData["naturalenemy"] as IEnumerable<MvcApplication2.Models.NaturalEnemy>)
+                { 
+                    <div><a href="@Url.Content("~/NaturalEnemy/Index?id=" + @ne.id)">@ne.ScientificName_chs</a></div>
+                }
+            </li>
+            <li><div style="color:Red">杀虫剂:</div>
+                @foreach (var pc in ViewData["Pesticide"] as IEnumerable<MvcApplication2.Models.Pesticide>)
+                { 
+                    <div><a href="@Url.Content("~/Pesticide/Index?id=" + @pc.id)">@pc.TradeName</a></div>
+                }
+            </li>
+        </ul>
+    </div>

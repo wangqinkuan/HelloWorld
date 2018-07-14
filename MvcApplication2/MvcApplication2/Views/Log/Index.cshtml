@@ -1,0 +1,60 @@
+﻿@{
+    ViewBag.Title = "Log";
+    Layout = "~/Views/share/tmp.cshtml";
+}
+<script type="text/javascript" src="../../js/jquery.js"></script>
+<script type="text/javascript" src="../../js/jquery.idTabs.min.js"></script>
+<script type="text/javascript" src="../../js/select-ui.min.js"></script>
+<script type="text/javascript" src="../../editor/kindeditor.js"></script>
+<form id="searchform">
+    <label>通过操作人查询</label><input name="searchtxt"  type="text"  class="scinput" />
+    <label>通过操作类型类型</label><input name="searchtxt"  type="text"  class="scinput" />
+    <input type=submit value="查询"/></form>
+<table class="tablelist">
+ <thead>
+ <tr>
+ <th>操作人</th>
+ <th>操作类型</th>
+ <th>权限等级</th>
+ <th>操作时间</th>
+ </tr>
+ </thead>
+ <tbody>
+@*  <tr>
+ <th>王</th>
+ <th>编辑病虫害</th>
+ <th>1</th>
+ <th>2018/6/3</th>
+ </tr>*@
+  @*<tr>
+ <th>王</th>
+ <th>删除病虫害</th>
+ <th>1</th>
+ <th>2018/6/3</th>
+ </tr>
+  <tr>*@
+ <th>王</th>
+ <th>登陆</th>
+ <th>1</th>
+ <th>2018/6/3</th>
+ @*</tr>
+  <tr>
+ <th>李</th>
+ <th>浏览病虫害详情</th>
+ <th>5</th>
+ <th>2018/6/3</th>
+ </tr>*@
+@*  <tr>
+ <th>李</th>
+ <th>浏览地图数据</th>
+ <th>5</th>
+ <th>2018/6/3</th>
+ </tr>*@
+  <tr>
+ <th>李</th>
+ <th>登陆</th>
+ <th>5</th>
+ <th>2018/6/3</th>
+ </tr>
+ </tbody>
+</table>

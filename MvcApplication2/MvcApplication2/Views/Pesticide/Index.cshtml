@@ -1,0 +1,56 @@
+﻿@{
+   // Layout = "~/Views/share/tmp.cshtml";
+}
+@model MvcApplication2.Models.Pesticide
+
+
+<script type="text/javascript" src="../../js/jquery.js"></script>
+
+
+<body>
+  
+    <div id="tab1" class="tabson">
+        <div class="formtext">@Model.TradeName<b>详细信息</b></div>
+        <ul class="forminfo">
+            <li>杀虫剂id:<div style="color:Red">@Model.id</div>
+            </li>
+            <li>总称:<div style="color:Red">@Model.GenericName</div>
+            </li>
+            <li>贸易名:<div style="color:Red">@Model.TradeName</div>
+            </li>
+            <li>剂量:<div style="color:Red">@Model.DosageForm</div>
+            </li>
+            <li>应用率:<div style="color:Red">@Model.ApplicationRate</div>
+                
+            </li>
+            <li>使用方法:<div style="color:Red">@Model.Method</div>
+            </li>
+            <li>安全性:<div style="color:Red">@Model.Safety</div>
+            </li>
+           
+            <li>
+                <label>
+                    图像<b>*</b></label>
+            </li>
+            <li>该杀虫剂作用的害虫(中文名及拉丁名)
+                @foreach (var pest in ViewData["pest"] as IEnumerable<MvcApplication2.Models.pest>)
+                { 
+                    <div style="color:Red">
+                     <a href="@Url.Content("~/Pest/Detail?id=" + @pest.id)">
+                        @pest.ScientificName @pest.ScientificName_chs</a>
+                        </div>
+                    
+                }
+            </li>
+            <li>出售该杀虫剂的厂商
+                @foreach (var m in ViewData["m"] as IEnumerable<MvcApplication2.Models.PesticideManufacturer>)
+                { 
+                    <div style="color:Red">
+                        <a href="@Url.Content("~/M/Index?id=" + @m.ID)">@m.Name</a></div>
+                }
+            </li>
+          
+        </ul>
+    </div>
+ 
+
